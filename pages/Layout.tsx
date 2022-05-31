@@ -5,11 +5,15 @@ import Link from "next/link";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
-export default function Layout({ children }: { children: any }) {
+export default function Layout({
+  children,
+}: {
+  children: JSX.Element[] | JSX.Element;
+}) {
   return (
-    <div className="flex flex-col justify-between min-h-screen">
+    <div className="flex flex-col min-h-screen justify-between">
       <NavBar />
-      <div>{children}</div>
+      <div className="text-zinc-900">{children}</div>
       <Footer />
     </div>
   );

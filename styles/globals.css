@@ -1,13 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;300;400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;300;400;600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 .Work {
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
 }
 
 body {
-  @apply bg-gray-100 Work
+  @apply bg-gray-50 Work;
 }

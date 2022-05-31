@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import Layout from "./Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -9,7 +10,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Rick&Morty</title>
         <link rel="icon" type="image/png" sizes="any" href="/images/icon.png" />
       </Head>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }
