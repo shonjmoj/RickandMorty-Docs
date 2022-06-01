@@ -8,8 +8,8 @@ const Home: NextPage = () => {
         <Image
           src="/images/RM.jpeg"
           alt="banner"
-          width={400}
-          height={400}
+          width={350}
+          height={350}
           layout="fixed"
         />
       </div>

@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { CgSpinnerAlt } from "react-icons/cg";
+import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
 
 interface Character {
   _id?: number;
@@ -42,7 +43,7 @@ export default function HomePage() {
         setCharacters(data.results);
         setIsloading(false);
       });
-  }, [page, characters]);
+  }, [page]);
 
   const getNextPage = (page: number) => {
     setPage(page + 1);
@@ -79,15 +80,17 @@ export default function HomePage() {
       <div className="flex mt-5 justify-between lg:w-[70%]">
         <button
           onClick={() => getPrevPage(page)}
-          className="px-2 py-1 lg:px-3 lg:py-2 font-semibold text-lg lg:text-xl"
+          className="px-2 py-1 lg:px-3 lg:py-2 font-semibold text-lg lg:text-xl flex items-center"
         >
-          &larr; Prev
+          <IoMdArrowDropleft size={30} />
+          Prev
         </button>
         <button
           onClick={() => getNextPage(page)}
-          className="px-2 py-1 lg:px-3 lg:py-2 font-semibold text-lg lg:text-xl"
+          className="px-2 py-1 lg:px-3 lg:py-2 font-semibold text-lg lg:text-xl flex items-center"
         >
-          Next &rarr;
+          Next
+          <IoMdArrowDropright size={30} />
         </button>
       </div>
       <div className="max-w-[100%] lg:max-w-[70%] flex mt-6 lg:mt-10">
