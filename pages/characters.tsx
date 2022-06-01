@@ -98,7 +98,7 @@ export default function HomePage() {
           {characters &&
             characters.map((character, index) => (
               <li
-                className="text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 drop-shadow-md"
+                className="text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 shadow-md"
                 key={index}
               >
                 <div className="flex flex-col">
