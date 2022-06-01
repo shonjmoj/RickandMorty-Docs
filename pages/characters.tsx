@@ -22,9 +22,18 @@ export default function HomePage() {
   const [characters, setCharacters] = useState<Character[]>();
   const [isLoading, setIsloading] = useState(true);
   const [page, setPage] = useState(1);
+  const [inputValue, setInputValue] = useState("");
 
   const myLoader = ({ src }: { src: string }) => {
     return `${src}`;
+  };
+
+  const search = () => {
+    const newChar = characters?.filter((character) => {
+      if (character.name?.toLocaleLowerCase().includes(inputValue))
+        return character;
+    });
+    setCharacters(newChar);
   };
   useEffect(() => {
     fetch(`https://rickandmortyapi.com/api/character/?page=${page}`)
@@ -33,20 +42,33 @@ export default function HomePage() {
         setCharacters(data.results);
         setIsloading(false);
       });
-  }, [page]);
+  }, [page, characters]);
 
   const getNextPage = (page: number) => {
     setPage(page + 1);
   };
+
   const getPrevPage = (page: number) => {
     if (page === 1) return;
     setPage(page - 1);
   };
+
+  const submitHandler = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(inputValue);
+    search();
+  };
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
   return (
     <div className="container max-w-[90%] xl:max-w-[70%] broder-black mx-auto lg:flex lg:flex-col items-center my-5">
-      <form className="lg:w-[60%] w-[100%] relative">
+      <form className="lg:w-[60%] w-[100%] relative" onSubmit={submitHandler}>
         <input
           type="text"
+          onChange={changeHandler}
           placeholder="looking for a caracter ?"
           className="w-full h-10 lg:h-12 px-3 lg:px-5 outline-none bg-gray-200 rounded-md"
         />
@@ -73,7 +95,7 @@ export default function HomePage() {
           {characters &&
             characters.map((character, index) => (
               <li
-                className="text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3"
+                className="text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 drop-shadow-md"
                 key={index}
               >
                 <div className="flex flex-col">
