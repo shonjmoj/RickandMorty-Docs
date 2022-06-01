@@ -69,15 +69,15 @@ export default function Episodes() {
         {episodes &&
           episodes.map((episode) => (
             <li key={episode._id}>
-              <div className="shadow-md border-[1px] text-center border-zinc-900 w-56 h-28 md:w-44 md:h-36 xl:h-40 2xl:w-56 2xl:h-52 flex items-center justify-center px-2 lg:px-4 group hover:bg-zinc-900 hover:text-gray-50 transition-all ease-in-out duration-200">
+              <div className="shadow-md border-[1px] text-center border-zinc-900 w-56 h-28 sm:w-48 md:w-44 md:h-36 xl:h-40 2xl:w-56 2xl:h-52 flex items-center justify-center px-2 lg:px-4 group hover:bg-zinc-900 hover:text-gray-50 transition-all ease-in-out duration-200">
                 <div>
-                  <h1 className="font-bold text-sm lg:text-xl group-hover:hidden">
+                  <h1 className="font-bold text-base md:text-lg lg:text-xl 2xl:text-2xl group-hover:hidden">
                     {episode.name}
                   </h1>
-                  <h3 className="font-light text-xs lg:text-sm group-hover:hidden">
+                  <h3 className="font-light text-xs md:text-sm 2xl:text-lg group-hover:hidden">
                     {episode.air_date}
                   </h3>
-                  <h1 className="font-semibold text-lg lg:text-2xl hidden group-hover:block">
+                  <h1 className="font-semibold text-lg lg:text-2xl 2xl:text-2xl hidden group-hover:block">
                     {episode.episode}
                   </h1>
                 </div>
