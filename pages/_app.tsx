@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Rick&Morty</title>
+        <title>RickAndMorty</title>
         <link rel="icon" type="image/png" sizes="any" href="/images/icon.png" />
       </Head>
       <Layout>

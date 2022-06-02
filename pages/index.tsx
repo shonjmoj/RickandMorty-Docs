@@ -3,8 +3,8 @@ import Image from "next/image";
 
 const Home: NextPage = () => {
   return (
-    <div className="container mx-auto flex flex-col justify-center items-center text-center">
-      <div className="w-72 md:w-96 bg-transparent">
+    <div className="min-h-screen container mx-auto flex flex-col justify-center items-center text-center">
+      <div className="w-72 md:w-96 bg-transparent select-none mb-3">
         <Image
           src="/images/RM.jpeg"
           alt="banner"

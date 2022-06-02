@@ -11,9 +11,9 @@ export default function Layout({
   children: JSX.Element[] | JSX.Element;
 }) {
   return (
-    <div className="flex flex-col min-h-screen justify-between">
+    <div className="flex flex-col justify-between">
       <NavBar />
-      <div className="text-zinc-900">{children}</div>
+      <div className="text-zinc-900 min-h-screen">{children}</div>
       <Footer />
     </div>
   );
