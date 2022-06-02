@@ -58,7 +58,7 @@ export default function Episodes() {
               width={400}
               height={400}
               src={
-                "/images/30-Rick-And-Morty-Clipart-black-and-white-Free-Clip-Art-.png"
+                "/images/30-Rick-And-Morty-Clipart-black-and-white-Free-Clip-Art--removebg-preview.png"
               }
             />
           </div>

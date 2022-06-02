@@ -3,81 +3,19 @@ import Head from "next/head";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
-import { CgSpinnerAlt } from "react-icons/cg";
-import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
+import { Characters, Props } from "../types/types";
 
-interface Characters {
-  _id?: number;
-  name?: string;
-  status?: string;
-  species?: string;
-  image?: string;
-  location?: {
-    name?: string;
-  };
-  origin?: {
-    name?: string;
-  };
-}
-
-export default function HomePage() {
-  const [characters, setCharacters] = useState<Characters[]>();
-  const [isLoading, setIsloading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [inputValue, setInputValue] = useState("");
-  const [paginate, setPaginate] = useState(true);
-  const [singleCharacter, setSingleCharacter] = useState<Characters>();
+export default function HomePage(props: Props) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [characterPerPage] = useState(20);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const myLoader = ({ src }: { src: string }) => {
     return `${src}`;
   };
 
-  const search = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newChar = characters?.filter((character) => {
-      if (character.name?.toLocaleLowerCase().match(e.target.value))
-        return character.name;
-    });
-    setCharacters(newChar);
-    setPaginate(false);
-  };
-  useEffect(() => {
-    fetch(`https://rickandmortyapi.com/api/character/?page=${page}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCharacters(data.results);
-        setIsloading(false);
-      });
-  }, [page, inputValue]);
-
-  useEffect(() => {
-    for (let id = 1; id <= 20; id++) {
-      fetch(`https://rickandmortyapi.com/api/character/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          let arr = [...data];
-          const char = arr.filter((elem: Characters) => {
-            return elem._id === id;
-          });
-          setSingleCharacter(char);
-        });
-    }
-  }, [singleCharacter?._id]);
-
-  const getNextPage = (page: number) => {
-    setPage(page + 1);
-  };
-
-  const getPrevPage = (page: number) => {
-    if (page === 1) return;
-    setPage(page - 1);
-  };
-
   const submitHandler = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-  };
-
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    search(e);
   };
 
   return (
@@ -90,7 +28,6 @@ export default function HomePage() {
         <form className="lg:w-[60%] w-[100%] relative" onSubmit={submitHandler}>
           <input
             type="text"
-            onChange={changeHandler}
             placeholder="looking for a caracter ?"
             className="w-full h-10 lg:h-12 px-3 lg:px-5 outline-none bg-gray-200"
           />
@@ -98,47 +35,23 @@ export default function HomePage() {
             <BiSearchAlt className="absolute right-2 top-2 lg:top-3 w-6 h-6" />
           </button>
         </form>
-        {paginate && (
-          <div className="flex mt-3 justify-between lg:w-[70%]">
-            <button
-              onClick={() => getPrevPage(page)}
-              className="px-2 py-1 lg:px-3 lg:py-2 font-semibold text-lg lg:text-xl flex items-center"
-            >
-              <IoMdArrowDropleft size={30} />
-              Prev
-            </button>
-            <button
-              onClick={() => getNextPage(page)}
-              className="px-2 py-1 lg:px-3 lg:py-2 font-semibold text-lg lg:text-xl flex items-center"
-            >
-              Next
-              <IoMdArrowDropright size={30} />
-            </button>
-          </div>
-        )}
         <div className="xl:max-w-[80%] flex mt-6 lg:mt-10">
           <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {characters &&
-              characters.map((character, index) => (
+            {props &&
+              props.result.map((character, index) => (
                 <li
                   className="text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200"
                   key={index}
                 >
                   <div className="flex flex-col">
-                    {isLoading ? (
-                      <div className="flex  justify-center">
-                        <CgSpinnerAlt size={50} className="animate-spin" />
-                      </div>
-                    ) : (
-                      <Image
-                        loader={myLoader}
-                        src={character.image!}
-                        alt={character.name}
-                        width={20}
-                        height={20}
-                        layout={"responsive"}
-                      />
-                    )}
+                    <Image
+                      loader={myLoader}
+                      src={character.image!}
+                      alt={character.name}
+                      width={20}
+                      height={20}
+                      layout={"responsive"}
+                    />
                     <div className="my-2">
                       <h1>{character.name}</h1>
                       <h3 className="font-light text-sm">
@@ -154,3 +67,20 @@ export default function HomePage() {
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  let result = [];
+  for (let page = 1; page <= 5; page++) {
+    const data = await fetch(
+      `https://rickandmortyapi.com/api/character/?page=${page}`
+    )
+      .then((res) => res.json())
+      .then((data) => data.results);
+    result.push(...data);
+  }
+  return {
+    props: {
+      result,
+    },
+  };
+};
