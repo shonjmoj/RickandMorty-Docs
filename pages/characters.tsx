@@ -6,9 +6,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { Characters, Props } from "../types/types";
 
 export default function HomePage(props: Props) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [characterPerPage] = useState(20);
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const [page, setPage] = useState(props.result.slice(0, 20));
 
   const myLoader = ({ src }: { src: string }) => {
     return `${src}`;
@@ -38,7 +36,7 @@ export default function HomePage(props: Props) {
         <div className="xl:max-w-[80%] flex mt-6 lg:mt-10">
           <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {props &&
-              props.result.map((character, index) => (
+              page.map((character, index) => (
                 <li
                   className="text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200"
                   key={index}
