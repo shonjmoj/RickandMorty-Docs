@@ -55,11 +55,10 @@ export default function Episodes() {
           <div className="w-44 md:w-56 lg:w-64 xl:w-80 select-none">
             <Image
               alt="RM"
-              width={400}
-              height={400}
-              src={
-                "/images/30-Rick-And-Morty-Clipart-black-and-white-Free-Clip-Art--removebg-preview.png"
-              }
+              width={500}
+              height={500}
+              src={"/images/218436_web-removebg-preview.png"}
+              layout={"responsive"}
             />
           </div>
           <div className="flex items-center gap-2 lg:gap-4">

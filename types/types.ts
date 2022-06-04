@@ -3,7 +3,7 @@ export interface Characters {
   name?: string;
   status?: string;
   species?: string;
-  image?: string;
+  image: string;
   location?: {
     name?: string;
   };

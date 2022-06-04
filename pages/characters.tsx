@@ -3,39 +3,32 @@ import Head from "next/head";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
+import PaginationButtons from "../components/PaginationButtons";
 import { Characters, Props } from "../types/types";
-import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
+import { getPages, myLoader } from "../utils/utils";
 
 export default function HomePage(props: Props) {
-  const [paginate, setPaginate] = useState(0);
   const [page, setPage] = useState<Characters[]>(props.result.slice(0, 20));
-  let Allpages: any[] = [];
-
-  const myLoader = ({ src }: { src: string }) => {
-    return `${src}`;
-  };
+  const [inputValue, setInputValue] = useState("");
+  const [character, setCharacter] = useState<Characters>();
+  let Allpages: Characters[][] = [];
 
   const submitHandler = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
-  for (let i = 0; i < props.result.length; i += 20) {
-    let arr = props.result.slice(i, i + 20);
-
-    Allpages.push(arr);
-  }
-
-  const onNext = () => {
-    if (paginate + 1 === Allpages.length) return;
-    setPage(Allpages[paginate + 1]);
-    setPaginate(paginate + 1);
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === undefined || e.target.value === "")
+      setPage(props.result.slice(0, 20));
+    else {
+      const char = props.result.filter((character) => {
+        return character.name?.toLowerCase().match(e.target.value);
+      });
+      console.log(char);
+      setPage(char);
+    }
   };
-
-  const onPrevious = () => {
-    if (paginate === 0) return;
-    setPage(Allpages[paginate - 1]);
-    setPaginate(paginate - 1);
-  };
+  getPages(props, Allpages);
   return (
     <>
       <Head>
@@ -48,29 +41,15 @@ export default function HomePage(props: Props) {
             type="text"
             placeholder="looking for a caracter ?"
             className="w-full h-10 lg:h-12 px-3 lg:px-5 outline-none bg-gray-200"
+            onChange={changeHandler}
           />
           <button type="submit">
             <BiSearchAlt className="absolute right-2 top-2 lg:top-3 w-6 h-6" />
           </button>
         </form>
-        <div className="flex justify-between w-[100%] xl:w-[80%] 2xl:w-[60%] items-center my-4 lg:my-6">
-          <button
-            className="flex items-center lg:text-lg 2xl:text-xl font-semibold disabled:cursor-not-allowed disabled:opacity-25"
-            onClick={onPrevious}
-            disabled={paginate === 0 ? true : false}
-          >
-            <IoMdArrowDropleft size={25} />
-            Prev
-          </button>
-          <button
-            className="flex items-center lg:text-lg 2xl:text-xl font-semibold disabled:cursor-not-allowed disabled:opacity-25"
-            onClick={onNext}
-            disabled={paginate + 1 === Allpages.length ? true : false}
-          >
-            Next
-            <IoMdArrowDropright size={25} />
-          </button>
-        </div>
+        {inputValue === "" && (
+          <PaginationButtons Allpages={Allpages} setPage={setPage} />
+        )}
         <div className="xl:max-w-[80%] flex">
           <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {props &&
@@ -82,7 +61,7 @@ export default function HomePage(props: Props) {
                   <div className="flex flex-col">
                     <Image
                       loader={myLoader}
-                      src={character.image!}
+                      src={character.image}
                       alt={character.name}
                       width={20}
                       height={20}
