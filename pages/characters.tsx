@@ -1,12 +1,15 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { Characters, Props } from "../types/types";
+import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
 
 export default function HomePage(props: Props) {
-  const [page, setPage] = useState(props.result.slice(0, 20));
+  const [paginate, setPaginate] = useState(0);
+  const [page, setPage] = useState<Characters[]>(props.result.slice(0, 20));
+  let Allpages: any[] = [];
 
   const myLoader = ({ src }: { src: string }) => {
     return `${src}`;
@@ -16,6 +19,23 @@ export default function HomePage(props: Props) {
     e.preventDefault();
   };
 
+  for (let i = 0; i < props.result.length; i += 20) {
+    let arr = props.result.slice(i, i + 20);
+
+    Allpages.push(arr);
+  }
+
+  const onNext = () => {
+    if (paginate + 1 === Allpages.length) return;
+    setPage(Allpages[paginate + 1]);
+    setPaginate(paginate + 1);
+  };
+
+  const onPrevious = () => {
+    if (paginate === 0) return;
+    setPage(Allpages[paginate - 1]);
+    setPaginate(paginate - 1);
+  };
   return (
     <>
       <Head>
@@ -33,7 +53,25 @@ export default function HomePage(props: Props) {
             <BiSearchAlt className="absolute right-2 top-2 lg:top-3 w-6 h-6" />
           </button>
         </form>
-        <div className="xl:max-w-[80%] flex mt-6 lg:mt-10">
+        <div className="flex justify-between w-[100%] xl:w-[80%] 2xl:w-[60%] items-center my-4 lg:my-6">
+          <button
+            className="flex items-center lg:text-lg 2xl:text-xl font-semibold disabled:cursor-not-allowed disabled:opacity-25"
+            onClick={onPrevious}
+            disabled={paginate === 0 ? true : false}
+          >
+            <IoMdArrowDropleft size={25} />
+            Prev
+          </button>
+          <button
+            className="flex items-center lg:text-lg 2xl:text-xl font-semibold disabled:cursor-not-allowed disabled:opacity-25"
+            onClick={onNext}
+            disabled={paginate + 1 === Allpages.length ? true : false}
+          >
+            Next
+            <IoMdArrowDropright size={25} />
+          </button>
+        </div>
+        <div className="xl:max-w-[80%] flex">
           <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {props &&
               page.map((character, index) => (
@@ -68,7 +106,7 @@ export default function HomePage(props: Props) {
 
 export const getStaticProps: GetStaticProps = async () => {
   let result = [];
-  for (let page = 1; page <= 5; page++) {
+  for (let page = 1; page <= 11; page++) {
     const data = await fetch(
       `https://rickandmortyapi.com/api/character/?page=${page}`
     )

@@ -63,13 +63,21 @@ export default function Episodes() {
             />
           </div>
           <div className="flex items-center gap-2 lg:gap-4">
-            <button onClick={() => prevSeason()}>
+            <button
+              className="disabled:cursor-not-allowed disabled:opacity-25"
+              onClick={() => prevSeason()}
+              disabled={season === 1 ? true : false}
+            >
               <IoMdArrowDropleft size={40} />
             </button>
             <h1 className="text-4xl lg:text-7xl font-bold">
               Season {`${season}`}
             </h1>
-            <button onClick={() => nextSeason()}>
+            <button
+              className="disabled:cursor-not-allowed disabled:opacity-25"
+              onClick={() => nextSeason()}
+              disabled={season === 5 ? true : false}
+            >
               <IoMdArrowDropright size={40} />
             </button>
           </div>
@@ -78,7 +86,7 @@ export default function Episodes() {
           {episodes &&
             episodes.map((episode) => (
               <li key={episode._id}>
-                <div className="shadow-md hover:shadow-lg border-[1px] text-center border-zinc-900 w-56 h-28 sm:w-48 md:w-44 md:h-36 xl:h-40 2xl:w-56 2xl:h-52 flex items-center justify-center px-2 lg:px-4 group hover:bg-zinc-900 hover:text-gray-50 transition-all ease-in-out duration-200">
+                <div className="shadow-md hover:shadow-lg border-[1px] text-center border-zinc-900 w-56 h-28 sm:w-48 md:w-44 md:h-40 xl:h-40 2xl:w-56 2xl:h-52 flex items-center justify-center p-4 lg:px-4 lg:py-6 group hover:bg-zinc-900 hover:text-gray-50 transition-all ease-in-out duration-200">
                   {isLoading ? (
                     <CgSpinnerAlt size={50} className="animate-spin" />
                   ) : (
@@ -89,7 +97,7 @@ export default function Episodes() {
                       <h3 className="font-light text-xs md:text-sm 2xl:text-lg group-hover:hidden">
                         {episode.air_date}
                       </h3>
-                      <h1 className="font-semibold text-xl lg:text-2xl 2xl:text-3xl hidden group-hover:block">
+                      <h1 className="font-semibold text-2xl lg:text-3xl 2xl:text-4xl hidden group-hover:block">
                         {episode.episode?.slice(3)}
                       </h1>
                     </div>
