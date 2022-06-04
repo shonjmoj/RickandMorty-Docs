@@ -23,7 +23,7 @@ export default function PaginationButtons({
     setPaginate(paginate - 1);
   };
   return (
-    <div className="flex justify-between w-[100%] xl:w-[80%] 2xl:w-[60%] items-center my-4 lg:my-6">
+    <div className="flex justify-between w-[100%] xl:w-[80%] 2xl:w-[60%] items-center">
       <button
         className="flex items-center lg:text-lg 2xl:text-xl font-semibold disabled:cursor-not-allowed disabled:opacity-25"
         onClick={onPrevious}

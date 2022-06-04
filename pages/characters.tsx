@@ -3,29 +3,34 @@ import Head from "next/head";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
+import CharacterNotFound from "../components/CharacterNotFound";
 import PaginationButtons from "../components/PaginationButtons";
 import { Characters, Props } from "../types/types";
 import { getPages, myLoader } from "../utils/utils";
 
 export default function HomePage(props: Props) {
   const [page, setPage] = useState<Characters[]>(props.result.slice(0, 20));
-  const [inputValue, setInputValue] = useState("");
-  const [character, setCharacter] = useState<Characters>();
+  const [notFound, setNotFound] = useState(false);
+  const [onSearch, setonSearch] = useState(false);
   let Allpages: Characters[][] = [];
 
   const submitHandler = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (page.length === 0) setNotFound(true);
   };
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === undefined || e.target.value === "")
+    if (e.target.value === undefined || e.target.value === "") {
+      setonSearch(false);
+      setNotFound(false);
       setPage(props.result.slice(0, 20));
-    else {
+    } else {
       const char = props.result.filter((character) => {
+        setonSearch(true);
         return character.name?.toLowerCase().match(e.target.value);
       });
-      console.log(char);
       setPage(char);
+      console.log(page);
     }
   };
   getPages(props, Allpages);
@@ -35,7 +40,7 @@ export default function HomePage(props: Props) {
         <title>RickAndMorty | Characters</title>
         <link rel="icon" type="image/png" sizes="any" href="/images/icon.png" />
       </Head>
-      <div className="container max-w-[90%] xl:max-w-[70%] mx-auto flex flex-col items-center my-5">
+      <div className="container max-w-[90%] xl:max-w-[70%] mx-auto flex flex-col items-center my-5 gap-3 md:gap-5">
         <form className="lg:w-[60%] w-[100%] relative" onSubmit={submitHandler}>
           <input
             type="text"
@@ -47,37 +52,42 @@ export default function HomePage(props: Props) {
             <BiSearchAlt className="absolute right-2 top-2 lg:top-3 w-6 h-6" />
           </button>
         </form>
-        {inputValue === "" && (
+        {!onSearch && (
           <PaginationButtons Allpages={Allpages} setPage={setPage} />
         )}
-        <div className="xl:max-w-[80%] flex">
-          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {props &&
-              page.map((character, index) => (
-                <li
-                  className="text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200"
-                  key={index}
-                >
-                  <div className="flex flex-col">
-                    <Image
-                      loader={myLoader}
-                      src={character.image}
-                      alt={character.name}
-                      width={20}
-                      height={20}
-                      layout={"responsive"}
-                    />
-                    <div className="my-2">
-                      <h1>{character.name}</h1>
-                      <h3 className="font-light text-sm">
-                        {character.location?.name}
-                      </h3>
+        {notFound ? (
+          <CharacterNotFound />
+        ) : (
+          <div className="xl:max-w-[80%] flex">
+            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {props &&
+                page.map((character, index) => (
+                  <li
+                    className="text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200"
+                    key={index}
+                  >
+                    <div className="flex flex-col">
+                      <Image
+                        loader={myLoader}
+                        src={character.image}
+                        alt={character.name}
+                        width={20}
+                        height={20}
+                        layout={"responsive"}
+                      />
+                      <div className="my-2">
+                        <h1>{character.name}</h1>
+                        <h3 className="font-light text-sm">
+                          {character.location?.name}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))}
-          </ul>
-        </div>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        )}
+        {/* {notFound === true && <CharacterNotFound />} */}
       </div>
     </>
   );
