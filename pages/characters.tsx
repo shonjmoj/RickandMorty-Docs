@@ -7,6 +7,7 @@ import CharacterNotFound from "../components/CharacterNotFound";
 import PaginationButtons from "../components/PaginationButtons";
 import { Characters, Props } from "../types/types";
 import { getPages, myLoader } from "../utils/utils";
+import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 
 export default function HomePage(props: Props) {
   const [page, setPage] = useState<Characters[]>(props.result.slice(0, 20));
@@ -64,7 +65,7 @@ export default function HomePage(props: Props) {
               {props &&
                 page.map((character, index) => (
                   <li
-                    className="text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200"
+                    className="relative text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200"
                     key={index}
                   >
                     <div className="flex flex-col">
