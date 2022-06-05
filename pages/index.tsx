@@ -11,6 +11,7 @@ const Home: NextPage = () => {
           width={500}
           height={500}
           layout={"responsive"}
+          priority
         />
       </div>
       <h1 className="text-4xl md:text-5xl lg:text-7xl font-normal text-zinc-800">

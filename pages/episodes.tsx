@@ -3,13 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
 import { CgSpinnerAlt } from "react-icons/cg";
-
-interface Episode {
-  _id?: number;
-  name?: string;
-  air_date?: string;
-  episode?: string;
-}
+import { Episode } from "../types/types";
 
 export default function Episodes() {
   const [episodes, setEpisodes] = useState<Episode[]>();
@@ -59,6 +53,7 @@ export default function Episodes() {
               height={500}
               src={"/images/218436_web-removebg-preview.png"}
               layout={"responsive"}
+              priority
             />
           </div>
           <div className="flex items-center gap-2 lg:gap-4">
@@ -84,7 +79,7 @@ export default function Episodes() {
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
           {episodes &&
             episodes.map((episode) => (
-              <li key={episode._id}>
+              <li key={episode.id}>
                 <div className="shadow-md hover:shadow-lg border-[1px] text-center border-zinc-900 w-56 h-28 sm:w-48 md:w-44 md:h-40 xl:h-40 2xl:w-56 2xl:h-52 flex items-center justify-center p-4 lg:px-4 lg:py-6 group hover:bg-zinc-900 hover:text-gray-50 transition-all ease-in-out duration-200">
                   {isLoading ? (
                     <CgSpinnerAlt size={50} className="animate-spin" />

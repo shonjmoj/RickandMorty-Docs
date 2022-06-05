@@ -12,7 +12,7 @@ export default function HomePage(props: Props) {
   const [page, setPage] = useState<Characters[]>(props.result.slice(0, 20));
   const [notFound, setNotFound] = useState(false);
   const [onSearch, setonSearch] = useState(false);
-  let Allpages: Characters[][] = [];
+  const Allpages: Characters[][] = [];
 
   const submitHandler = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,13 +27,14 @@ export default function HomePage(props: Props) {
     } else {
       const char = props.result.filter((character) => {
         setonSearch(true);
-        return character.name?.toLowerCase().match(e.target.value);
+        return character.name?.toLowerCase().match(e.target.value.trim());
       });
       setPage(char);
-      console.log(page);
     }
   };
+
   getPages(props, Allpages);
+
   return (
     <>
       <Head>
@@ -67,14 +68,19 @@ export default function HomePage(props: Props) {
                     key={index}
                   >
                     <div className="flex flex-col">
-                      <Image
-                        loader={myLoader}
-                        src={character.image}
-                        alt={character.name}
-                        width={20}
-                        height={20}
-                        layout={"responsive"}
-                      />
+                      <div className="select-none">
+                        <Image
+                          loader={() =>
+                            myLoader({ src: character.image, width: 200 })
+                          }
+                          src={character.image}
+                          alt={character.name}
+                          width={20}
+                          height={20}
+                          layout={"responsive"}
+                          priority
+                        />
+                      </div>
                       <div className="my-2">
                         <h1>{character.name}</h1>
                         <h3 className="font-light text-sm">
@@ -87,7 +93,6 @@ export default function HomePage(props: Props) {
             </ul>
           </div>
         )}
-        {/* {notFound === true && <CharacterNotFound />} */}
       </div>
     </>
   );
