@@ -77,7 +77,7 @@ export default function HomePage(props: Props) {
                           width={400}
                           height={400}
                           layout="intrinsic"
-                          priority
+                          priority={true}
                         />
                       </div>
                       <div className="my-2">
