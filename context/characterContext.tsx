@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Characters, Props } from "../types/types";
 
@@ -24,7 +25,18 @@ export const CharactersProvider = (props: any) => {
     }
   }, []);
 
-  if (loading === true) return <div>Loading...</div>;
+  if (loading === true)
+    return (
+      <div className="mx-auto container min-h-screen flex items-center justify-center">
+        <Image
+          height={60}
+          width={60}
+          src="/images/Circles-menu-3-unscreen.gif"
+          alt="loading"
+          priority={true}
+        />
+      </div>
+    );
 
   return (
     <CharactersContext.Provider value={characters}>
