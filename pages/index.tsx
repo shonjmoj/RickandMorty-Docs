@@ -11,7 +11,7 @@ const Home: NextPage = () => {
           width={400}
           height={400}
           layout={"intrinsic"}
-          priority
+          priority={true}
         />
       </div>
       <h1 className="text-4xl xl:text-6xl font-normal text-zinc-800">

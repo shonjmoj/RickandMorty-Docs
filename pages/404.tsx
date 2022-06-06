@@ -7,13 +7,12 @@ export default function NotFound() {
       <div className="w-[55%] md:w-[40%] lg:w-[30%] xl:w-[20%]">
         <Image
           alt="404"
-          height={100}
-          width={100}
+          height={400}
+          width={400}
           src={
             "/images/30-Rick-And-Morty-Clipart-black-and-white-Free-Clip-Art--removebg-preview.png"
           }
-          layout="responsive"
-          priority
+          priority={true}
         />
       </div>
       <h1>404 - Page not found</h1>
