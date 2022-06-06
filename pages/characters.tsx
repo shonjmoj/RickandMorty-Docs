@@ -71,14 +71,12 @@ export default function HomePage(props: Props) {
                     <div className="flex flex-col">
                       <div className="select-none">
                         <Image
-                          loader={() =>
-                            myLoader({ src: character.image, width: 200 })
-                          }
+                          loader={() => myLoader({ src: character.image })}
                           src={character.image}
                           alt={character.name}
-                          width={20}
-                          height={20}
-                          layout={"responsive"}
+                          width={400}
+                          height={400}
+                          layout="intrinsic"
                           priority
                         />
                       </div>

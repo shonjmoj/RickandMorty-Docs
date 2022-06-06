@@ -1,7 +1,7 @@
 import { Characters, Props } from "../types/types";
 
-export const myLoader = ({ src, width }: { src: string; width: number }) => {
-  return `${src}?w=${width}`;
+export const myLoader = ({ src }: { src: string }) => {
+  return `${src}`;
 };
 
 export const getPages = (props: Props, Allpages: Characters[][]) => {
