@@ -8,7 +8,6 @@ import { Episode } from "../types/types";
 export default function Episodes() {
   const [episodes, setEpisodes] = useState<Episode[]>();
   const [season, setSeason] = useState(1);
-  const [isLoading, setIsloading] = useState(true);
 
   useEffect(() => {
     const allSeasons: Episode[] = [];
@@ -20,7 +19,6 @@ export default function Episodes() {
           const ep = data.results.filter((elem: Episode) => {
             return elem.episode?.includes(`S0${season}`);
           });
-          setIsloading(false);
           allSeasons.push(...ep);
 
           if (i === 3) setEpisodes(allSeasons);
@@ -80,21 +78,17 @@ export default function Episodes() {
             episodes.map((episode) => (
               <li key={episode.id}>
                 <div className="shadow-md hover:shadow-lg border-[1px] text-center border-zinc-900 w-56 h-28 sm:w-48 md:w-44 md:h-40 xl:h-40 2xl:w-56 2xl:h-52 flex items-center justify-center p-4 lg:px-4 lg:py-6 group hover:bg-zinc-900 hover:text-gray-50 transition-all ease-in-out duration-200">
-                  {isLoading ? (
-                    <CgSpinnerAlt size={50} className="animate-spin" />
-                  ) : (
-                    <div>
-                      <h1 className="font-bold text-base md:text-lg lg:text-xl 2xl:text-2xl group-hover:hidden">
-                        {episode.name}
-                      </h1>
-                      <h3 className="font-light text-xs md:text-sm 2xl:text-lg group-hover:hidden">
-                        {episode.air_date}
-                      </h3>
-                      <h1 className="font-semibold text-2xl lg:text-3xl 2xl:text-4xl hidden group-hover:block">
-                        {episode.episode?.slice(3)}
-                      </h1>
-                    </div>
-                  )}
+                  <div>
+                    <h1 className="font-bold text-base md:text-lg lg:text-xl 2xl:text-2xl group-hover:hidden">
+                      {episode.name}
+                    </h1>
+                    <h3 className="font-light text-xs md:text-sm 2xl:text-lg group-hover:hidden">
+                      {episode.air_date}
+                    </h3>
+                    <h1 className="font-semibold text-2xl lg:text-3xl 2xl:text-4xl hidden group-hover:block">
+                      {episode.episode?.slice(3)}
+                    </h1>
+                  </div>
                 </div>
               </li>
             ))}
