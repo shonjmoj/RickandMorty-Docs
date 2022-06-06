@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Layout from "./Layout";
+import { CharactersProvider } from "../context/characterContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -11,7 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" type="image/png" sizes="any" href="/images/icon.png" />
       </Head>
       <Layout>
-        <Component {...pageProps} />
+        <CharactersProvider>
+          <Component {...pageProps} />
+        </CharactersProvider>
       </Layout>
     </>
   );

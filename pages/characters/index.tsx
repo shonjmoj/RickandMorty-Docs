@@ -7,7 +7,6 @@ import CharacterNotFound from "../../components/CharacterNotFound";
 import PaginationButtons from "../../components/PaginationButtons";
 import { Characters, Props } from "../../types/types";
 import { getPages, myLoader } from "../../utils/utils";
-import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 
 export default function HomePage(props: Props) {
   const [page, setPage] = useState<Characters[]>(props.result.slice(0, 20));
