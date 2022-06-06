@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useCharacters } from "../../context/chara";
+import { useCharacters } from "../../context/characterContext";
 import { Characters } from "../../types/types";
 import { myLoader } from "../../utils/utils";
 import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
