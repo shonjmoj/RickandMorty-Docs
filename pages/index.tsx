@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Image from "next/image";
-import { useCharacters } from "../context/chara";
 
 const Home: NextPage = () => {
   return (
