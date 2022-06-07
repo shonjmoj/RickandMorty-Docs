@@ -2,11 +2,10 @@ import Head from "next/head";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
-import { CgSpinnerAlt } from "react-icons/cg";
 import { Episode } from "../types/types";
 
 export default function Episodes() {
-  const [episodes, setEpisodes] = useState<Episode[]>();
+  const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [season, setSeason] = useState(1);
 
   useEffect(() => {

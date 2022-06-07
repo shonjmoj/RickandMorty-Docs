@@ -7,6 +7,7 @@ import { myLoader } from "../../utils/utils";
 import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 import NotFound from "../404";
 import Head from "next/head";
+import { IoClose } from "react-icons/io5";
 
 function Character() {
   const router = useRouter();
@@ -38,13 +39,19 @@ function Character() {
               priority={true}
             />
           </div>
-          <div className="flex md:flex-col md:items-start md:justify-center md:gap-4 p-1 md:mr-20 justify-between items-center">
+          <div className="flex md:flex-col md:items-start md:gap-4 p-1 md:mr-20 justify-between items-center relative">
+            <button
+              className="hidden md:block"
+              onClick={() => router.push("/characters")}
+            >
+              <IoClose size={30} />
+            </button>
             <div className="">
               <h1 className="text-2xl md:text-4xl font-bold">{state.name}</h1>
               <h2 className="font-light md:text-lg">-{state.location?.name}</h2>
               <h1 className="text-lg md:text-xl">-{state.species}</h1>
               <h2 className="text-lg md:text-xl">
-                -{state.origin?.name !== "unknown" && state.origin?.name}
+                {state.origin?.name !== "unknown" && state.origin?.name}
               </h2>
             </div>
             {state.gender?.toLowerCase() === "male" ? (
