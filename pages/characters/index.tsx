@@ -1,6 +1,7 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import CharacterNotFound from "../../components/CharacterNotFound";
@@ -13,6 +14,7 @@ export default function HomePage(props: Props) {
   const [notFound, setNotFound] = useState(false);
   const [onSearch, setonSearch] = useState(false);
   const Allpages: Characters[][] = [];
+  const router = useRouter();
 
   const submitHandler = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,7 +68,13 @@ export default function HomePage(props: Props) {
                   <li
                     className="relative text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200"
                     key={index}
-                    onClick={() => console.log(character)}
+                    onClick={() => {
+                      router.push(
+                        `${router.pathname}/${character.name
+                          ?.toLowerCase()
+                          .replace(" ", "_")}`
+                      );
+                    }}
                   >
                     <div className="flex flex-col">
                       <div className="select-none">

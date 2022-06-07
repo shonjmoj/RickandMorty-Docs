@@ -26,8 +26,8 @@ function Character() {
         <link rel="icon" type="image/png" sizes="any" href="/images/icon.png" />
       </Head>
       <div className="flex container min-h-screen justify-center items-center mx-auto">
-        <div className="flex flex-col md:flex-row-reverse  border-[1px] border-zinc-900 p-3 shadow-md gap-2">
-          <div className="select-none w-max">
+        <div className="flex flex-col md:flex-row-reverse  border-[1px] border-zinc-900 p-2 shadow-lg gap-2">
+          <div className="select-none">
             <Image
               width={400}
               height={400}
@@ -38,13 +38,13 @@ function Character() {
               priority={true}
             />
           </div>
-          <div className="flex md:flex-col md:items-start md:p-1 md:mr-5 justify-between items-center">
+          <div className="flex md:flex-col md:items-start md:justify-center md:gap-4 p-1 md:mr-20 justify-between items-center">
             <div className="">
               <h1 className="text-2xl md:text-4xl font-bold">{state.name}</h1>
-              <h2 className="font-light md:text-lg">{state.location?.name}</h2>
-              <h1 className="text-lg md:text-xl">{state.species}</h1>
+              <h2 className="font-light md:text-lg">-{state.location?.name}</h2>
+              <h1 className="text-lg md:text-xl">-{state.species}</h1>
               <h2 className="text-lg md:text-xl">
-                {state.origin?.name !== "unknown" && state.origin?.name}
+                -{state.origin?.name !== "unknown" && state.origin?.name}
               </h2>
             </div>
             {state.gender?.toLowerCase() === "male" ? (

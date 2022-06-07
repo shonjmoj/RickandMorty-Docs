@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import Icon from "../public/images/file.svg";
 
 export default function NavBar() {
+  const router = useRouter();
   return (
     <div className="bg-zinc-900 text-gray-50 flex justify-between shadow-lg items-center">
       <div className="px-4 py-5 fill-gray-50 cursor-pointer">
@@ -15,10 +17,16 @@ export default function NavBar() {
           </div>
         </Link>
       </div>
-      <div className="p-5 lg:text-lg">
+      <div className="p-5 lg:text-lg font-light">
         <Link href="/characters">
           <a
-            className="p-3 mx-2 rounded-md hover:bg-zinc-800 transition-all duration-150"
+            className={
+              router.pathname === "/"
+                ? "p-3 mx-2 rounded-md hover:bg-zinc-800 transition-all duration-150"
+                : router.pathname === "/characters"
+                ? "p-3 mx-2 rounded-md bg-zinc-800 font-normal"
+                : "p-3 mx-2 rounded-md hover:bg-zinc-800 transition-all duration-150"
+            }
             href=""
           >
             Characters
@@ -26,7 +34,13 @@ export default function NavBar() {
         </Link>
         <Link href="/episodes" rel="icon">
           <a
-            className="p-3 mx-2 rounded-md hover:bg-zinc-800 transition-all duration-150"
+            className={
+              router.pathname === "/"
+                ? "p-3 mx-2 rounded-md hover:bg-zinc-800 transition-all duration-150"
+                : router.pathname === "/episodes"
+                ? "p-3 mx-2 rounded-md bg-zinc-800 font-normal"
+                : "p-3 mx-2 rounded-md hover:bg-zinc-800 transition-all duration-150"
+            }
             href=""
           >
             Episodes
