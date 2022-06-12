@@ -21,7 +21,7 @@ function Character(state: Character) {
       <div className="flex container min-h-screen justify-center items-center mx-auto">
         <div className="flex flex-col md:flex-row-reverse  border-[1px] border-zinc-900 p-2 shadow-lg gap-2">
           <div className="select-none">
-            <Image
+            {/* <Image
               width={400}
               height={400}
               src={state.image}
@@ -29,7 +29,7 @@ function Character(state: Character) {
               loader={() => myLoader({ src: state.image })}
               layout="intrinsic"
               priority={true}
-            />
+            /> */}
           </div>
           <div className="flex md:flex-col md:items-start md:gap-4 p-1 md:mr-20 justify-between items-center relative">
             <button
@@ -61,19 +61,19 @@ function Character(state: Character) {
 export const getStaticPaths = async () => {
   const res = await fetch("https://rickandmortyapi.com/api/character");
   const data = await res.json();
-  const cards = [data];
-  const paths = cards.map((card: Character) => ({
-    params: { name: `${card.name}` },
+  const paths = data.results.map((character: Character) => ({
+    params: { name: `${character.name.toLowerCase().replace("", "_")}` },
   }));
 
   return { paths, fallback: false };
 };
 
-export const getStaticProps = async (params: Character) => {
+export const getStaticProps = async (character: Character) => {
   const res = await fetch(
-    `https://rickandmortyapi.com/api/character/${params.id}`
+    `https://rickandmortyapi.com/api/character/${character.name}`
   );
   const data = await res.json();
+
   return {
     props: {
       data,

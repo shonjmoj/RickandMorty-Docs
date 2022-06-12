@@ -71,10 +71,9 @@ export default function HomePage(props: Props) {
                     onClick={() => {
                       router.push(
                         `${router.pathname}/${character.name
-                          ?.toLowerCase()
+                          .toLowerCase()
                           .replace(" ", "_")}`
                       );
-                      console.log(router.pathname);
                     }}
                   >
                     <div className="flex flex-col">

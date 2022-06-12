@@ -1,6 +1,6 @@
 export interface Character {
   id?: number;
-  name?: string;
+  name: string;
   status?: string;
   gender?: string;
   species?: string;
