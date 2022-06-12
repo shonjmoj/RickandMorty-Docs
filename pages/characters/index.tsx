@@ -6,14 +6,14 @@ import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import CharacterNotFound from "../../components/CharacterNotFound";
 import PaginationButtons from "../../components/PaginationButtons";
-import { Characters, Props } from "../../types/types";
+import { Character, Props } from "../../types/types";
 import { getPages, myLoader } from "../../utils/utils";
 
 export default function HomePage(props: Props) {
-  const [page, setPage] = useState<Characters[]>(props.result.slice(0, 20));
+  const [page, setPage] = useState<Character[]>(props.result.slice(0, 20));
   const [notFound, setNotFound] = useState(false);
   const [onSearch, setonSearch] = useState(false);
-  const Allpages: Characters[][] = [];
+  const Allpages: Character[][] = [];
   const router = useRouter();
 
   const submitHandler = (e: React.SyntheticEvent<HTMLFormElement>) => {
@@ -74,6 +74,7 @@ export default function HomePage(props: Props) {
                           ?.toLowerCase()
                           .replace(" ", "_")}`
                       );
+                      console.log(router.pathname);
                     }}
                   >
                     <div className="flex flex-col">

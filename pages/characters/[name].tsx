@@ -2,23 +2,15 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useCharacters } from "../../context/characterContext";
-import { Characters } from "../../types/types";
+import { Character } from "../../types/types";
 import { myLoader } from "../../utils/utils";
 import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 import NotFound from "../404";
 import Head from "next/head";
 import { IoClose } from "react-icons/io5";
 
-function Character() {
+function Character(state: Character) {
   const router = useRouter();
-  const characters = useCharacters();
-  const [state, setState] = useState<Characters | undefined>(() =>
-    characters.find(
-      (chara) =>
-        chara.name?.replace(" ", "_").toLowerCase() === router.query.name
-    )
-  );
-  if (state === undefined) return <NotFound />;
 
   return (
     <>
@@ -65,5 +57,28 @@ function Character() {
     </>
   );
 }
+
+export const getStaticPaths = async () => {
+  const res = await fetch("https://rickandmortyapi.com/api/character");
+  const data = await res.json();
+  const cards = [data];
+  const paths = cards.map((card: Character) => ({
+    params: { name: `${card.name}` },
+  }));
+
+  return { paths, fallback: false };
+};
+
+export const getStaticProps = async (params: Character) => {
+  const res = await fetch(
+    `https://rickandmortyapi.com/api/character/${params.id}`
+  );
+  const data = await res.json();
+  return {
+    props: {
+      data,
+    },
+  };
+};
 
 export default Character;

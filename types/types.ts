@@ -1,4 +1,4 @@
-export interface Characters {
+export interface Character {
   id?: number;
   name?: string;
   status?: string;
@@ -21,5 +21,9 @@ export interface Episode {
 }
 
 export type Props = {
-  result: Characters[];
+  result: Character[];
+};
+
+export type EpisodesProps = {
+  result: Episode[];
 };
