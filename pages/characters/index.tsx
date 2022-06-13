@@ -70,9 +70,7 @@ export default function HomePage(props: Props) {
                     key={index}
                     onClick={() => {
                       router.push(
-                        `${router.pathname}/${character.name
-                          .toLowerCase()
-                          .replace(" ", "_")}`
+                        `${router.pathname}/${character.id.toString()}`
                       );
                     }}
                   >

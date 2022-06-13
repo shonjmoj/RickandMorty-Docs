@@ -9,13 +9,13 @@ import NotFound from "../404";
 import Head from "next/head";
 import { IoClose } from "react-icons/io5";
 
-function Character(state: Character) {
+function Character(char: Character) {
   const router = useRouter();
-
+  console.log(char);
   return (
     <>
       <Head>
-        <title>RickAndMorty | {state.name}</title>
+        <title>RickAndMorty | {char.name}</title>
         <link rel="icon" type="image/png" sizes="any" href="/images/icon.png" />
       </Head>
       <div className="flex container min-h-screen justify-center items-center mx-auto">
@@ -24,9 +24,9 @@ function Character(state: Character) {
             {/* <Image
               width={400}
               height={400}
-              src={state.image}
-              alt={state.name}
-              loader={() => myLoader({ src: state.image })}
+              src={char.image}
+              alt={char.name}
+              loader={() => myLoader({ src: char.image })}
               layout="intrinsic"
               priority={true}
             /> */}
@@ -39,14 +39,14 @@ function Character(state: Character) {
               <IoClose size={30} />
             </button>
             <div className="">
-              <h1 className="text-2xl md:text-4xl font-bold">{state.name}</h1>
-              <h2 className="font-light md:text-lg">-{state.location?.name}</h2>
-              <h1 className="text-lg md:text-xl">-{state.species}</h1>
+              <h1 className="text-2xl md:text-4xl font-bold">{char.name}</h1>
+              <h2 className="font-light md:text-lg">-{char.location?.name}</h2>
+              <h1 className="text-lg md:text-xl">-{char.species}</h1>
               <h2 className="text-lg md:text-xl">
-                {state.origin?.name !== "unknown" && state.origin?.name}
+                {char.origin?.name !== "unknown" && char.origin?.name}
               </h2>
             </div>
-            {state.gender?.toLowerCase() === "male" ? (
+            {char.gender?.toLowerCase() === "male" ? (
               <BsGenderMale size={30} />
             ) : (
               <BsGenderFemale size={30} />
@@ -62,7 +62,10 @@ export const getStaticPaths = async () => {
   const res = await fetch("https://rickandmortyapi.com/api/character");
   const data = await res.json();
   const paths = data.results.map((character: Character) => ({
-    params: { name: `${character.name.toLowerCase().replace("", "_")}` },
+    params: {
+      id: character.id.toString(),
+      // name: character.name.toLowerCase().replace(" ", "_"),
+    },
   }));
 
   return { paths, fallback: false };
@@ -70,13 +73,13 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (character: Character) => {
   const res = await fetch(
-    `https://rickandmortyapi.com/api/character/${character.name}`
+    `https://rickandmortyapi.com/api/character/${character.id}`
   );
-  const data = await res.json();
+  const char = await res.json();
 
   return {
     props: {
-      data,
+      char,
     },
   };
 };
