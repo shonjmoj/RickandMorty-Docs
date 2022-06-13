@@ -69,13 +69,11 @@ export default function HomePage(props: Props) {
                     className="relative text-base lg:text-lg font-semibold border-[1px] border-zinc-900 p-2 xl:p-3 shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200"
                     key={index}
                     onClick={() => {
-                      router.push(
-                        `${router.pathname}/${character.id.toString()}`
-                      );
+                      router.push(`${router.pathname}/${character.id}`);
                     }}
                   >
                     <div className="flex flex-col">
-                      <div className="select-none">
+                      <div className="select-none" key={character.id}>
                         <Image
                           loader={() => myLoader({ src: character.image })}
                           src={character.image}
