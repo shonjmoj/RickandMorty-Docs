@@ -11,13 +11,13 @@ export default function Footer() {
         </h3>
       </div>
       <div className="flex gap-2">
-        <a href="https://github.com/miid0">
+        <a href="https://github.com/shonjmoj">
           <BsGithub
             size={24}
             className="hover:rotate-3 transition-all duration-150"
           />
         </a>
-        <a href="https://twitter.com/ouaaa77">
+        <a href="https://twitter.com/shonjmoj">
           <VscTwitter
             size={25}
             className="hover:-rotate-3 transition-all duration-150"
